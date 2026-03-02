@@ -20,6 +20,7 @@ class ASTZSSNode(ZSSNode):
 
 
 class PY_TO_AST_ENCODER:
+    
     def __init__(self, path):
         with open(path , 'r') as f:
             content = f.read()
@@ -53,12 +54,13 @@ class PY_TO_AST_ENCODER:
         
         return zss_node
 
-if __name__ == "__main__":
-    path = os.path.join("..", "657023", "352515686.py3")
-    with open(path, 'r') as f:
-        print()
-        a = PY_TO_AST_ENCODER(f.read())
-        asn = a.create_ast()
-        print(simple_distance(asn, asn))
-        print(asn)
+# if __name__ == "__main__":
+    
+#     path = os.path.join("..", "657023", "352515686.py3")
+#     with open(path, 'r') as f:
+#         print()
+#         a = PY_TO_AST_ENCODER(f.read())
+#         asn = a.create_ast()
+#         print(simple_distance(asn, asn))
+#         print(asn)
     

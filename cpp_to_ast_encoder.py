@@ -5,6 +5,7 @@ from zss import Node as ZSSNode
 clang.cindex.Config.set_library_file('C:/Program Files/LLVM/bin/libclang.dll')
 
 class CPP_TO_AST_ENCODER:
+    
     def __init__(self, path):
         self.path = path
         self.index = clang.cindex.Index.create()
