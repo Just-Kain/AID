@@ -1,6 +1,6 @@
 import hashlib
 import time 
-from cf_setings import cf_key, cf_secret
+from cf_request.cf_setings import cf_key, cf_secret
 import random 
 
 def sha512Hex(message : str) -> str:
@@ -22,20 +22,21 @@ def params_to_string(params : dict):
         
     return string_params[:-1]
 
-def create_cf_quary(methodName : str,  params : dict):
+def create_cf_query(methodName : str,  params : dict):
     
     rand_val = random.randint(100000, 999999)
-    time_quary = f"{time.time():.0f}"
+    
+    time_query = f"{time.time():.0f}"
     
     params_string = params_to_string(params)
     
-    unhash_apiSig = f"{rand_val}/{methodName}?apiKey={cf_key}&{params_string}&time={time_quary}#{cf_secret}"
+    unhash_apiSig = f"{rand_val}/{methodName}?apiKey={cf_key}&{ params_string }&time={ time_query }#{ cf_secret }"
     api_signature = sha512Hex(unhash_apiSig)
     
-    api_link = f"https://codeforces.com/api/{ methodName }?{params_string}&apiKey={cf_key}&time={time_quary}&apiSig={rand_val}{api_signature}"
+    api_link = f"https://codeforces.com/api/{ methodName }?{ params_string }&apiKey={ cf_key }&time={ time_query }&apiSig={ rand_val }{ api_signature }"
             
     return api_link
-    
+     
 if __name__ == "__main__":
     
     methodName = "contest.status"
@@ -45,6 +46,7 @@ if __name__ == "__main__":
         "groupCode" : "b4hWjnSy2p"
         }
     
-    create_cf_quary(methodName=methodName, params=qu)
+    query_link = create_cf_query(methodName=methodName, params=qu)
+    print(query_link)
    
-   # 1 772 360 700
+   

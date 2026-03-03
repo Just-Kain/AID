@@ -15,10 +15,7 @@ class ASTZSSNode(ZSSNode):
     def add_child(self, child: 'ASTZSSNode'):
         self.children.append(child)
     
-    def get_children(self):
-        return self.children
-
-
+    
 class PY_TO_AST_ENCODER:
     
     def __init__(self, path):
@@ -48,9 +45,6 @@ class PY_TO_AST_ENCODER:
                         child_node = self.ast_to_zss_tree(item)
                         if child_node:
                             zss_node.add_child(child_node)
-            
-            elif child_value is not None and not isinstance(child_value, (str, int, float, bool)):
-                pass
         
         return zss_node
 
