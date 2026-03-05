@@ -1,6 +1,6 @@
 import hashlib
 import time 
-from cf_request.cf_setings import cf_key, cf_secret
+from cf_setings import cf_key, cf_secret
 import random 
 
 def sha512Hex(message : str) -> str:
@@ -14,7 +14,6 @@ def sha512Hex(message : str) -> str:
     
 def params_to_string(params : dict):
     """Конвертирует словарь параметров запроса в строку """
-    
     string_params = ""
     
     for key, val in params.items():
@@ -22,13 +21,21 @@ def params_to_string(params : dict):
         
     return string_params[:-1]
 
+def sort_params(params : dict):
+    """Сортируем параметры по кдючу"""
+    sorted_params = dict(sorted(params.items()))
+    return sorted_params
+
 def create_cf_query(methodName : str,  params : dict):
+    """Создание cf API запроса по введенным методам"""
     
     rand_val = random.randint(100000, 999999)
     
     time_query = f"{time.time():.0f}"
     
-    params_string = params_to_string(params)
+    sorted_params = sort_params(params)
+    
+    params_string = params_to_string(sorted_params)
     
     unhash_apiSig = f"{rand_val}/{methodName}?apiKey={cf_key}&{ params_string }&time={ time_query }#{ cf_secret }"
     api_signature = sha512Hex(unhash_apiSig)

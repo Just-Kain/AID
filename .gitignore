@@ -2,3 +2,5 @@ __pycache__/cpp_to_ast_encoder.cpython-313.pyc
 __pycache__/import_and_space_constructor.cpython-313.pyc
 __pycache__/py_to_ast_encoder.cpython-313.pyc
 cf_setings.py
+cf_request/__pycache__/cf_setings.cpython-313.pyc
+cf_request/__pycache__/hash_gen.cpython-313.pyc
