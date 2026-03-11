@@ -10,7 +10,8 @@ code_type_lib = {       'c' : 'c++',
                         'pypy3' : 'py',
                         'pypy2' : 'py',
                         'pypy3-64' : 'py',
-                        'pas' : 'pas'}
+                        
+                        }
     # Здесь прописаны все поддерживаемые языки для шифрования 
     # На данный момент c++, py, pas
 
@@ -18,7 +19,7 @@ def get_file_paths(folder_path="."):
     file_names = []
     
     for file_name in os.listdir(folder_path):
-        file_names.append(folder_path + file_name)
+        file_names.append(os.path.join(folder_path, file_name))
             
     return file_names
 
@@ -34,10 +35,10 @@ def create_and_clear_work_dir(new_dir_name="work_dir"):
             
 def get_extension(path):
     root, extension = os.path.splitext(path)
+    extension = extension[1::]
     return extension
 
 def code_type_definition(code_type):
-
     try:  
         return code_type_lib[code_type]
     

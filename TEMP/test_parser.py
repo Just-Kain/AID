@@ -55,3 +55,35 @@ def cpp_encoder(content : str) -> str:
 """
 Мусор выше, можно использовать для сравнивания кода
 """
+
+import ast
+
+code = """
+def gcd(a, b):
+    while b:
+        a, b = b, a % b
+    return a
+
+def fibonacci(n, mod):
+    if n == 0:
+        return 0
+    elif n == 1:
+        return 1
+    a, b = 0, 1
+    for _ in range(2, n + 1):
+        a, b = b, (a + b) % mod
+    return b
+
+MOD = 10**9 + 7
+
+
+n = int(input())
+a = list(map(int, input().split()))
+"""
+
+tree = ast.parse(code)
+
+for node in ast.walk(tree):
+    if isinstance(node, ast.Name):
+        # id содержит имя переменной
+        print(f"Имя: {node.id}, Контекст: {type(node.ctx).__name__}")

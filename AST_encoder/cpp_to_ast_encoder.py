@@ -1,14 +1,16 @@
 import typing
 import clang.cindex
+from AST_encoder.ast_encoder_interface import AST_ENCODER
 from zss import Node as ZSSNode
 
 clang.cindex.Config.set_library_file('C:/Program Files/LLVM/bin/libclang.dll')
 
-class CPP_TO_AST_ENCODER:
+class CPP_TO_AST_ENCODER(AST_ENCODER):
     
     def __init__(self, path):
         self.path = path
         self.index = clang.cindex.Index.create()
+        self.name_set = set()
     
     def filter_node_list_by_file(
         self,
@@ -42,6 +44,7 @@ class CPP_TO_AST_ENCODER:
         for node in filtered_nodes:
             label = f"{node.kind.name}"
             
+            self.name_set.add(f"{node.spelling}")
             zss_node = ZSSNode(label)
             
             node_to_zss[node] = zss_node
@@ -79,3 +82,7 @@ class CPP_TO_AST_ENCODER:
             return root_nodes[0]
         else:
             return ZSSNode("Empty AST")
+        
+    def get_var_names(self):
+        return self.name_set
+    

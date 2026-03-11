@@ -1,6 +1,6 @@
 import hashlib
 import time 
-from cf_setings import cf_key, cf_secret
+from setings import cf_key, cf_secret 
 import random 
 
 def sha512Hex(message : str) -> str:
@@ -17,6 +17,7 @@ def params_to_string(params : dict):
     string_params = ""
     
     for key, val in params.items():
+        if val == None: continue
         string_params += f"{key}={val}&"
         
     return string_params[:-1]
@@ -50,7 +51,8 @@ if __name__ == "__main__":
     
     qu = {
         "contestId" : "657023" ,
-        "groupCode" : "b4hWjnSy2p"
+        "groupCode" : "b4hWjnSy2p",
+
         }
     
     query_link = create_cf_query(methodName=methodName, params=qu)

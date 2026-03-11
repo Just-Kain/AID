@@ -1,6 +1,5 @@
 import ast
-import os
-from zss import simple_distance
+from AST_encoder.ast_encoder_interface import AST_ENCODER
 from zss import Node as ZSSNode
 
 class ASTZSSNode(ZSSNode):
@@ -16,12 +15,13 @@ class ASTZSSNode(ZSSNode):
         self.children.append(child)
     
     
-class PY_TO_AST_ENCODER:
+class PY_TO_AST_ENCODER(AST_ENCODER):
     
     def __init__(self, path):
         with open(path , 'r') as f:
             content = f.read()
         self.ast =  ast.parse(content)
+        self.name_set = set()
         
     def create_ast(self):
         return self.ast_to_zss_tree(self.ast)
@@ -48,13 +48,8 @@ class PY_TO_AST_ENCODER:
         
         return zss_node
 
-# if __name__ == "__main__":
-    
-#     path = os.path.join("..", "657023", "352515686.py3")
-#     with open(path, 'r') as f:
-#         print()
-#         a = PY_TO_AST_ENCODER(f.read())
-#         asn = a.create_ast()
-#         print(simple_distance(asn, asn))
-#         print(asn)
-    
+    def get_var_names(self):
+        for node in ast.walk(self.ast):
+            if isinstance(node, ast.Name):
+                self.name_set.add(f"{node.id}")
+        return self.name_set

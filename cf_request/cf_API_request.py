@@ -1,25 +1,31 @@
 import requests
-from hash_gen import create_cf_query 
+from cf_request.hash_gen import create_cf_query 
 
-methodName = "contest.status"
+class cf_requests():
+    class contest():
+        """Работает с методами contest"""
+        def status(groupCode_=None ,contestId_="566", asManager_=None, handle_=None, from_="1", count_="10", includeSources_=None):
+            
+            """Возвращает попытки для указанного соревнования. Дополнительно может вернуть попытки указанного пользователя.\n
+            Возвращает список объектов Submission, отсортированных по убыванию id попытки"""
+            
+            methodName = "contest.status"
+            
+            params = {
+                "groupCode" : groupCode_,
+                "contestId" : contestId_ ,
+                "asManager" : asManager_,
+                "handle" : handle_,
+                "from" : from_,
+                "count" : count_,
+                "includeSources" : includeSources_
+                }
+            
+            url = create_cf_query(methodName, params)
+            requests_ans = requests.get(url)
+            data = requests_ans.json()
+            return data
     
-params1 = {
-    "groupCode" : "b4hWjnSy2p",
-    "contestId" : "657023" ,
-    "count" : "5",
-    "from" : "1",
-    "asManager" : "true",
-    }
-
-params = {
-    "contestId" : "566" ,
-    "from" : "1",
-    "count" : "10"
-    }
-
-url = create_cf_query(methodName, params1)
-
-ans = requests.get(url)
-data = ans.json()
-print(url)
-print(data)
+if __name__ == "__main__":
+    data = cf_requests.contest.status()
+    print(data)
