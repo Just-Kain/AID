@@ -3,8 +3,9 @@ import shutil
 
 encoder='utf-8' 
 
-code_type_lib = {       'c' : 'c++', 
+code_type_lib = {       'c' : 'c++',
                         'cpp' : 'c++',
+                        'py' : 'py',
                         'py3' : 'py',
                         'py2' : 'py',
                         'pypy3' : 'py',

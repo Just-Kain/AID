@@ -1,32 +1,20 @@
 import os
 import shutil
 from AST_encoder.AST_encode import global_AST_encoder
-from file_utils import get_file_paths, create_and_clear_work_dir
+from file_utils import get_file_paths, create_and_clear_work_dir, get_extension
 from cf_request.cf_API_request import cf_requests
 from pathlib import Path
-
-"""
-"contestId" : "657023" ,
-"groupCode" : "b4hWjnSy2p",
-"""
+from difflib import Differ
+import pandas as pd
 
 
-def _Start_work():
-    
-    req = cf_requests.contest.status(contestId_=657023, groupCode_="b4hWjnSy2p", from_=None, count_=None)
-    
-    result = list()
-    if req["status"] == 'OK':
-        print("request complete")
-        result = req["result"]
-    else:
-        print("request faild")
-        return
-    
-    create_and_clear_work_dir("shcool_solution_space")
-    dir_path = os.path.join("..", "657023")
+def create_space(req:dict, dir_path : str, work_dir_name="shcool_solution_space"):
+     
+    result = req["result"]
+
+    create_and_clear_work_dir(work_dir_name)
     path_to_file = Path(dir_path)
-    now_path = os.path.join('.', 'shcool_solution_space')
+    now_path = os.path.join('.', work_dir_name)
     for submition in result:
         try:
             index_problem = submition["problem"]["index"]
@@ -40,6 +28,42 @@ def _Start_work():
                     shutil.copy(file_path, need_path)
         except:
             print("file with soluthion not found or somthing gone wrong")
+            
+def count_diff(content_1 : str, content_2 : str):
+    d = Differ()
+    diff = list(d.compare(content_1, content_2))
+    count = 0
+    for s in diff:
+        if s[0] == '+' | s[0] == '-':
+            count += 1
+        elif s[0] == '?':
+            count += 1
+    
+
+def _Start_work():
+    
+    problem_names = ['A']
+    
+    Sc_sol_path = {
+        'A' : [''],
+    }
+    
+    AI_sol_path = {
+        'A' : ['D:\AID\AID\AI_Solution\A\deepseak.py'],
+        }
+    
+    metrics = dict()
+    
+    for problem in problem_names:
+        for AI_path in AI_sol_path[problem]:
+            ai_encode = global_AST_encoder(AI_path)
+            ai_ast = ai_encode.create_ast()
+            ai_name_set = ai_encode.get_var_names()
+            ai_lang = get_extension(AI_sol_path)
+            
+            for Sc_path in Sc_sol_path:
+                
+                ...
             
         
     

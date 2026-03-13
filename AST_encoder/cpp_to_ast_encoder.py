@@ -1,9 +1,10 @@
 import typing
 import clang.cindex
 from AST_encoder.ast_encoder_interface import AST_ENCODER
+from setings import clang_path
 from zss import Node as ZSSNode
 
-clang.cindex.Config.set_library_file('C:/Program Files/LLVM/bin/libclang.dll')
+clang.cindex.Config.set_library_file(clang_path)
 
 class CPP_TO_AST_ENCODER(AST_ENCODER):
     
