@@ -44,7 +44,7 @@ def code_type_definition(code_type):
         return code_type_lib[code_type]
     
     except KeyError:
-        raise('Warning this code type not supported to encoding!')
+        print('Warning this code type not supported to encoding!')
     
 if __name__ == "__main__":
     test = get_file_paths()

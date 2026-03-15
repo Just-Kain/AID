@@ -3,6 +3,7 @@ import clang.cindex
 from AST_encoder.ast_encoder_interface import AST_ENCODER
 from setings import clang_path
 from zss import Node as ZSSNode
+from functools import lru_cache
 
 clang.cindex.Config.set_library_file(clang_path)
 
@@ -25,7 +26,8 @@ class CPP_TO_AST_ENCODER(AST_ENCODER):
                 result.append(node)
         
         return result
-
+    
+    @lru_cache(maxsize=512)
     def create_ast(self):
         translation_unit = self.index.parse(self.path)
         

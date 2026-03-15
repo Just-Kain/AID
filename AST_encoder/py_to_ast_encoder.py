@@ -1,6 +1,7 @@
 import ast
 from AST_encoder.ast_encoder_interface import AST_ENCODER
 from zss import Node as ZSSNode
+from functools import lru_cache
 
 class ASTZSSNode(ZSSNode):
     """
@@ -14,11 +15,11 @@ class ASTZSSNode(ZSSNode):
     def add_child(self, child: 'ASTZSSNode'):
         self.children.append(child)
     
-    
+
 class PY_TO_AST_ENCODER(AST_ENCODER):
     
     def __init__(self, path):
-        with open(path , 'r') as f:
+        with open(path , 'r', encoding='utf-8') as f:
             content = f.read()
         self.ast =  ast.parse(content)
         self.name_set = set()
@@ -26,6 +27,7 @@ class PY_TO_AST_ENCODER(AST_ENCODER):
     def create_ast(self):
         return self.ast_to_zss_tree(self.ast)
     
+    @lru_cache(maxsize=512)
     def ast_to_zss_tree(self, node: ast.AST):
 
         if node is None:
