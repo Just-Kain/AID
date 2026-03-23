@@ -1,5 +1,7 @@
 import os
 import shutil
+from pathlib import Path
+
 
 encoder='utf-8' 
 
@@ -45,7 +47,42 @@ def code_type_definition(code_type):
     
     except KeyError:
         print('Warning this code type not supported to encoding!')
+        
+#todo : сделать возможность доставать из реквеста задачи
+def sort_solution_to_dirs(req:dict, dir_path : str, work_dir_name="shcool_solution_space"):
+    """
+    Копирует все решения из dir_path в work_dir_name и сортирует их по задачам из cf_request\n
+    Возвращает все литерралы проблем из cf_request
+    """
+    result = req["result"]
+    problem_set = set()
+    create_and_clear_work_dir(work_dir_name)
+    path_to_file = Path(dir_path)
+    now_path = os.path.join('.', work_dir_name)
+
     
+    for submition in result:
+        try:
+            index_problem = submition["problem"]["index"]
+            problem_set.add(index_problem)
+
+            need_path = os.path.join(now_path, index_problem)
+            file_path = str(list(path_to_file.glob(f"{submition["id"]}.*"))[0])
+            if submition["verdict"] == "OK" or submition["verdict"] == "PARTIAL":
+                if os.path.isdir(need_path):
+                    shutil.copy(file_path, need_path)
+                else:
+                    os.mkdir(need_path)
+                    shutil.copy(file_path, need_path)
+        except:
+            print("file with soluthion not found or somthing gone wrong")
+    
+    print(f"RETURNING {now_path}")
+    print(f"RETURNING {problem_set}")
+    
+    return now_path, problem_set
+
+
 if __name__ == "__main__":
     test = get_file_paths()
     print(test)
