@@ -1,9 +1,7 @@
 import os
 import shutil
 import json
-from AST_encoder.AST_encode import global_AST_encoder, AST_score
-from file_utils import get_file_paths, sort_solution_to_dirs, get_extension, code_type_definition
-from cf_request.cf_API_request import cf_requests
+from utils.file_utils import get_file_paths, sort_solution_to_dirs, get_extension, code_type_definition
 from difflib import Differ
 from collections import defaultdict
 from functools import lru_cache

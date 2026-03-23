@@ -1,5 +1,5 @@
 import ast
-from AST_encoder.ast_encoder_interface import AST_ENCODER
+from parsing.ast.ast_encoder_interface import AST_ENCODER
 from zss import Node as ZSSNode
 from functools import lru_cache
 

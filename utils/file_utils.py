@@ -5,18 +5,26 @@ from pathlib import Path
 
 encoder='utf-8' 
 
-code_type_lib = {       'c' : 'c++',
+code_lang_lib = {       'c' : 'c++',
                         'cpp' : 'c++',
+                        'C++17 (GCC 7-32)' : 'c++',
+                        'C++20 (GCC 13-64)' : 'c++',
+                        'C++23 (GCC 14-64, msys2)' : 'c++',
+                        'GNU C11' : 'c++',
                         'py' : 'py',
                         'py3' : 'py',
                         'py2' : 'py',
                         'pypy3' : 'py',
                         'pypy2' : 'py',
                         'pypy3-64' : 'py',
-                        
+                        'PyPy 2' : 'py',
+                        'PyPy 3' : 'py',
+                        'PyPy 3-64' : 'py',
+                        'Python 2' : 'py',
+                        'Python 3' : 'py',
                         }
     # Здесь прописаны все поддерживаемые языки для шифрования 
-    # На данный момент c++, py, pas
+    # На данный момент c++, py
 
 def get_file_paths(folder_path="."):
     file_names = []
@@ -43,7 +51,7 @@ def get_extension(path):
 
 def code_type_definition(code_type):
     try:  
-        return code_type_lib[code_type]
+        return code_lang_lib[code_type]
     
     except KeyError:
         print('Warning this code type not supported to encoding!')
