@@ -1,16 +1,16 @@
 import typing
 import clang.cindex
-from AST_encoder.ast_encoder_interface import AST_ENCODER
-from setings import clang_path
+from parsing.ast.ast_encoder_interface import AST_ENCODER
+from core.config import CLANG_PATH
 from zss import Node as ZSSNode
 from functools import lru_cache
 
-clang.cindex.Config.set_library_file(clang_path)
+clang.cindex.Config.set_library_file(CLANG_PATH)
 
 class CPP_TO_AST_ENCODER(AST_ENCODER):
     
-    def __init__(self, path):
-        self.path = path
+    def __init__(self, code: str):
+        self.code = code
         self.index = clang.cindex.Index.create()
         self.name_set = set()
     
@@ -29,8 +29,18 @@ class CPP_TO_AST_ENCODER(AST_ENCODER):
     
     @lru_cache(maxsize=512)
     def create_ast(self):
-        translation_unit = self.index.parse(self.path)
         
+        filename = "temp.cpp"
+        unsaved_files = [(filename, self.code)]
+        args = [
+        '-I', 'C:\\Program Files\\LLVM\\lib\\clang\\19\\include',  # Путь к заголовкам Clang
+        '-I', 'C:\\MinGW\\include\\c++\\13.2.0',  # Путь к заголовкам GCC (если установлен)
+        '-I', 'C:\\MinGW\\include\\c++\\13.2.0\\x86_64-w64-mingw32',  # Дополнительные пути
+        '-I', 'C:\\MinGW\\lib\\gcc\\mingw32\\6.3.0\\include\\c++\\mingw32',
+        ]
+
+        translation_unit = self.index.parse(filename, args=args, unsaved_files=unsaved_files)
+                
         all_nodes = []
         
         def traverse(node):

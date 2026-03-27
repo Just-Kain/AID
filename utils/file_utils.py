@@ -2,7 +2,6 @@ import os
 import shutil
 from pathlib import Path
 
-
 encoder='utf-8' 
 
 code_lang_lib = {       'c' : 'c++',
@@ -52,10 +51,25 @@ def get_extension(path):
 def code_type_definition(code_type):
     try:  
         return code_lang_lib[code_type]
-    
     except KeyError:
         print('Warning this code type not supported to encoding!')
+        return code_type
+    
+    
+def use_comments(code: str, code_type: str):
+        """проверка на использование комментариев в коде"""
+        comment_sing = list()
+        if code_type == 'py':
+            comment_sing = ['"""', '#']
+        else:
+            comment_sing = ['//', '/*', '*/']
         
+        for sing in comment_sing:
+            if sing in code:
+                return 1
+        
+        return 0
+    
 #todo : сделать возможность доставать из реквеста задачи
 def sort_solution_to_dirs(req:dict, dir_path : str, work_dir_name="shcool_solution_space"):
     """

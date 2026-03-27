@@ -5,7 +5,7 @@ from utils.file_utils import get_file_paths, sort_solution_to_dirs, get_extensio
 from difflib import Differ
 from collections import defaultdict
 from functools import lru_cache
-
+from core.pipeline import Pipeline
 class code_map():
     """
     Получаем класс с метриками по коду\n
@@ -69,34 +69,7 @@ class code_map():
         """Подсчитывает количество уникальных имен"""
         return len(vars_1 - vars_2) + len(vars_2 - vars_1)
 
-    def use_comments(self):
-        """проверка на использование комментариев в коде"""
-        comment_sing = list()
-        if self.lang == 'py':
-            comment_sing = ['"""', '#']
-        else:
-            comment_sing = ['//', '/*', '*/']
-        
-        for sing in comment_sing:
-            if sing in self.content:
-                return 1
-        
-        return 0
     
-        
-def collect_code_map(dir_path):
-    dict_code_map = dict()
-    
-    paths = get_file_paths(dir_path)
-    
-    for path in paths:
-        try:
-            dict_code_map[f'{os.path.basename(path)}'] = code_map(path)
-        except:
-            print("code type note supported")
-    
-    return dict_code_map
-        
 def collector(problems, work_path):
     """Проходит по всем задачам и собирает списки codemap разбитые в словарь"""
     problem_dict = dict()
@@ -125,8 +98,9 @@ def _Start_work():
             
     
 if __name__ == '__main__':
-    _Start_work()
-    
+    # _Start_work()
+    work = Pipeline()
+    work.run(contest_id="657023", group_id="b4hWjnSy2p")
     # cf_requests.contest.status()
     
         

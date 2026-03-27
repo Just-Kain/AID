@@ -60,7 +60,7 @@ class CFRequests:
             self.last_url = None
             
         """Работает с методами contest"""
-        def status(self, groupCode_=None ,contestId_="566", asManager_=None, handle_=None, from_="1", count_="10", includeSources_=None, **kwargs):
+        def status(self, groupCode_=None ,contestId_="566", asManager_=None, handle_=None, from_="1", count_="10", includeSources_=None, showUnofficial_='false'):
             
             """Возвращает попытки для указанного соревнования. Дополнительно может вернуть попытки указанного пользователя.\n
             Возвращает список объектов Submission, отсортированных по убыванию id попытки"""
@@ -75,6 +75,7 @@ class CFRequests:
                 "from" : from_,
                 "count" : count_,
                 "includeSources" : includeSources_,
+                "showUnofficial" : showUnofficial_,
                 }
             
             url = self.parent.create_cf_query(methodName, params)

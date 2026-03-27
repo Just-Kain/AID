@@ -1,28 +1,36 @@
 # core/pipeline.py
-
+import pickle
 from core.models import Submission, FeatureVector, SimilarityResult, Candidate
 from data.collectors.codeforces.CodeforcesCollector import CodeforcesCollector
 from parsing.ast.encoder import ASTEncoder
-from features.extractor import FeatureExtractor
+#from features.extractor import FeatureExtractor
 from similarity.engine import SimilarityEngine
 from ranking.scorer import Ranker
+from core.config import CF_KEY, CF_SECRET
 #from report.generator import ReportGenerator
 
 class Pipeline:
     def __init__(self):
-        self.collector = CodeforcesCollector()
+        self.collector = CodeforcesCollector(CF_KEY, CF_SECRET)
         self.ast_parser = ASTEncoder()
-        self.feature_extractor = FeatureExtractor()
+        # self.feature_extractor = FeatureExtractor() don't need it
         self.similarity_engine = SimilarityEngine()
-        self.ranker = Ranker()
+        # self.ranker = Ranker()
         #self.report_generator = ReportGenerator()
 
-    def run(self, contest_id: str, group_id: str, cf_key: str, cf_secret: str):
-        # 1. Сбор данных
-        submission = self.collector.fetch_submissions(contest_id, group_id, cf_key, cf_secret)
+    def run(self, contest_id: str, group_id: str):
 
-        # 2. Парсинг AST
-
+        print("MESSAGE: start work with 'fetch_submissions'")
+        self.collector.fetch_submissions(contest_id, group_id)
+        
+        print("MESSAGE: collect ast")
+        dirty_features = self.ast_parser.ASTEncoder()
+        with open("stage_save.pkl", "wb") as f:
+            pickle.dump(dirty_features, f)
+            
+        print("MESSAGE: ast collect and save")
+        print("MESSAGE: feature is extraction")
+        
         # 3. Извлечение признаков
 
         # 4. Вычисление сходства

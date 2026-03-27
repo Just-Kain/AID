@@ -18,10 +18,8 @@ class ASTZSSNode(ZSSNode):
 
 class PY_TO_AST_ENCODER(AST_ENCODER):
     
-    def __init__(self, path):
-        with open(path , 'r', encoding='utf-8') as f:
-            content = f.read()
-        self.ast =  ast.parse(content)
+    def __init__(self, code):
+        self.ast =  ast.parse(code)
         self.name_set = set()
         
     def create_ast(self):
