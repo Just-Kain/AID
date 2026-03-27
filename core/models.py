@@ -13,11 +13,19 @@ class Submission:
         self.verdict = verdict
         self.comment = comment
 
+class FeatureVector:
+    def __init__(self, solution_id: int, ast: Any, code: str, length: int):
+        self.solution_id = solution_id
+        self.ast = ast
+        self.code = code
+        self.length = length
+    
 class SimilarityResult:
-    def __init__(self, sub_a: Submission, sub_b: Submission, ast_score: float, diff_score: float, delta_len: float):
-        self.sub_a = sub_a
-        self.sub_b = sub_b
+    def __init__(self, subID_a: Submission, subID_b: Submission, ast_score: float, differ: str, diff_score: float, delta_len: float):
+        self.subID_a = subID_a
+        self.subID_b = subID_b
         self.ast_score = ast_score
+        self.differ = differ
         self.diff_score = diff_score
         self.delta_len = delta_len
         

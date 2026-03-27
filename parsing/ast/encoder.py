@@ -1,6 +1,5 @@
 from parsing.ast.cpp_to_ast_encoder import CPP_TO_AST_ENCODER
 from parsing.ast.py_to_ast_encoder import PY_TO_AST_ENCODER
-from zss import simple_distance
 import sqlite3
 from core.config import DB_PATH, INCLUDING_LANGUAGE
 
@@ -79,6 +78,3 @@ class ASTEncoder:
         
         return submissions
 
-    def AST_score(NodeA, NodeB):
-        ASTScore = simple_distance(NodeA, NodeB)
-        return ASTScore
