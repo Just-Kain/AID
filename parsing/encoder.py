@@ -34,26 +34,27 @@ class ASTEncoder:
             return problem_names, submissions
         
     def gen_ast(self, lang: str, code_list: list):
-        if lang == 'py':
-            for code in code_list:
-                try: 
-                    encoder = PY_TO_AST_ENCODER(code)
-                    ast = encoder.create_ast()
-                    yield ast
-                except:
-                    print("WARNING: The code is not interpreted in Python or something went wrong.")
-                    yield None
-             
-        # elif lang == 'c++':
-        #     for code in code_list:
-        #         try: 
-        #             encoder = CPP_TO_AST_ENCODER(code)
-        #             ast = encoder.create_ast()
-        #             yield ast
-        #         except:
-        #             print("WARNING: The code doesn't compile in C++ or something went wrong")
-        #             yield None
+        
+        if lang in INCLUDING_LANGUAGE:
+            if lang == 'py':
+                for code in code_list:
+                    try: 
+                        encoder = PY_TO_AST_ENCODER(code)
+                        ast = encoder.create_ast()
+                        yield ast
+                    except:
+                        print("WARNING: The code is not interpreted in Python or something went wrong.")
+                        yield None
                 
+            elif lang == 'c++':
+                for code in code_list:
+                    try: 
+                        encoder = CPP_TO_AST_ENCODER(code)
+                        ast = encoder.create_ast()
+                        yield ast
+                    except:
+                        print("WARNING: The code doesn't compile in C++ or something went wrong")
+                        yield None     
         else:
             for code in code_list:
                 yield None
@@ -66,7 +67,7 @@ class ASTEncoder:
             
         return ast_list
                 
-    def ASTEncoder(self):
+    def encode(self):
         
         problem_names, submissions = self.take_submissions()
             

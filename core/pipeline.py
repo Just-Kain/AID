@@ -2,7 +2,7 @@
 import pickle
 from core.models import Submission, FeatureVector, SimilarityResult, Candidate
 from data.collectors.codeforces.CodeforcesCollector import CodeforcesCollector
-from parsing.ast.encoder import ASTEncoder
+from parsing.encoder import ASTEncoder
 from features.extractor import FeatureExtractor
 from similarity.engine import SimilarityEngine
 from ranking.scorer import Ranker
@@ -21,10 +21,11 @@ class Pipeline:
     def run(self, contest_id: str, group_id: str):
 
         print("MESSAGE: start work with 'fetch_submissions'")
+        
         self.collector.fetch_submissions(contest_id, group_id)
         
         print("MESSAGE: collect ast")
-        dirty_features = self.ast_parser.ASTEncoder()
+        dirty_features = self.ast_parser.encode()
         with open("stage_save.pkl", "wb") as f:
             pickle.dump(dirty_features, f)
             
