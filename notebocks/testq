@@ -1,0 +1,7 @@
+SELECT DISTINCT c.sub_id_a, c.sub_id_b, c.score
+FROM candidate c
+JOIN submissions e1 ON c.sub_id_a = e1.id
+JOIN submissions e2 ON c.sub_id_b = e2.id
+WHERE e1.author_id != e2.author_id
+ORDER BY score DESC
+LIMIT 100;

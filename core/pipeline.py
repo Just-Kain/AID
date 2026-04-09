@@ -45,11 +45,10 @@ class Pipeline:
         self.result_repo.save_many(results)
         
         # 5. Ранжирование
-        print("MESSAGE: ranking is extract")
+        
         candidates = self.ranker.rate(results)
         self.rank_repo.save_many(candidates)
-        
+        print("MESSAGE: ranking is extract")
         # 6. Генерация отчёта
-        #self.report_generator.generate(candidates)
-        return results
-        #return candidates
+
+        return candidates
