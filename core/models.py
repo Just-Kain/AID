@@ -1,7 +1,8 @@
 from typing import Any
 
 class Submission:
-    def __init__(self, solution_id: int, contest_id: int, user_id: int, user_name: str, problem_name: str, problem_index: str, code: str, language: str, comment: str, verdict: str):
+    def __init__(self, solution_id: int, contest_id: int, user_id: int, user_name: str, problem_name: str, \
+        problem_index: str, code: str, language: str, comment: str, verdict: str, points):
         self.solution_id = solution_id
         self.contest_id = contest_id
         self.user_id = user_id
@@ -12,6 +13,7 @@ class Submission:
         self.language = language
         self.verdict = verdict
         self.comment = comment
+        self.points = points
 
 class FeatureVector:
     def __init__(self, solution_id: int, ast: Any, code: str, length: int):

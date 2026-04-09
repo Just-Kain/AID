@@ -6,4 +6,4 @@ CLANG_PATH = "C:\\Program Files\\LLVM\\bin\\libclang.dll"
 CF_KEY = ""
 CF_SECRET = ""
 
-INCLUDING_LANGUAGE = ('py', )
+INCLUDING_LANGUAGE = ('py', 'c++')

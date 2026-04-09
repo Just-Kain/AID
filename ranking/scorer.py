@@ -6,7 +6,7 @@ class Ranker:
     def rate(self, results):
         
         features = np.array([r.to_list_features() for r in results])
-        weights = np.array([0.70, 0.25, 0.05])
+        weights = np.array([0.80, 0.15, 0.05])
         coef = 1 / (weights[1] + weights[2])
         
         rank = features @ weights

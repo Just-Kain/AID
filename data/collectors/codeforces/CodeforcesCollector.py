@@ -45,6 +45,7 @@ class CodeforcesCollector:
                 programming_Language = submition.get("programmingLanguage")
                 verdict = submition.get("verdict")
                 comments = 0
+                points = submition.get("points")
                 
                 code = self._convert_to_utf8(code_base64) if code_base64 else None
                 programming_Language = code_type_definition(programming_Language) if programming_Language else None
@@ -62,7 +63,8 @@ class CodeforcesCollector:
                     code, 
                     programming_Language,
                     comments,
-                    verdict
+                    verdict,
+                    points
                 )
                 yield new_submition
                 
@@ -87,14 +89,15 @@ class CodeforcesCollector:
                 code TEXT NOT NULL,
                 language TEXT NOT NULL,
                 comments INTEGER,
-                verdict TEXT NOT NULL
+                verdict TEXT NOT NULL,
+                points INTEGER
             )
             """)
 
             for sub in self.get_submissions():
                 cursor.execute("""
                                 INSERT OR IGNORE INTO submissions 
-                                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                                 """, (
                                 sub.solution_id,
                                 sub.contest_id,
@@ -105,7 +108,8 @@ class CodeforcesCollector:
                                 sub.code,
                                 sub.language,
                                 sub.comment,
-                                sub.verdict
+                                sub.verdict,
+                                sub.points
                                 ))
             
         
