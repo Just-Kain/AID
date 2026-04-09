@@ -2,6 +2,8 @@
 import pickle
 from core.models import Submission, FeatureVector, SimilarityResult, Candidate
 from data.collectors.codeforces.CodeforcesCollector import CodeforcesCollector
+from data.repositories.result_repository import SimilarityResultRepository
+from data.repositories.candidate_repository import SimilarityCandidateRepository
 from parsing.encoder import ASTEncoder
 from features.extractor import FeatureExtractor
 from similarity.engine import SimilarityEngine
@@ -14,8 +16,11 @@ class Pipeline:
         self.collector = CodeforcesCollector(CF_KEY, CF_SECRET)
         self.ast_parser = ASTEncoder()
         self.feature_extractor = FeatureExtractor()
-        #self.similarity_engine = SimilarityEngine()
-        # self.ranker = Ranker()
+        self.engine = SimilarityEngine()
+        self.result_repo = SimilarityResultRepository()
+        self.rank_repo = SimilarityCandidateRepository()
+        self.ranker = Ranker()
+        
         #self.report_generator = ReportGenerator()
 
     def run(self, contest_id: str, group_id: str):
@@ -32,17 +37,19 @@ class Pipeline:
         print("MESSAGE: ast collect and save")
         print("MESSAGE: feature in extraction")
         
-        self.feature_extractor.extract(dirty_features)
+        features = self.feature_extractor.extract(dirty_features)
         
         print("MESSAGE: feature is extract")
         
-        # 3. Извлечение признаков
-
-        # 4. Вычисление сходства
-
+        results = self.engine.extract(features)
+        self.result_repo.save_many(results)
+        
         # 5. Ранжирование
-
+        print("MESSAGE: ranking is extract")
+        candidates = self.ranker.rate(results)
+        self.rank_repo.save_many(candidates)
+        
         # 6. Генерация отчёта
         #self.report_generator.generate(candidates)
-        pass
+        return results
         #return candidates
