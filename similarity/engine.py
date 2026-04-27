@@ -9,6 +9,7 @@ from itertools import combinations
 from functools import lru_cache
 from difflib import SequenceMatcher
 from core.models import SimilarityResult
+from logger_config import get_logger
 
 def compare_pair(args):
     
@@ -60,15 +61,19 @@ def compare_pair(args):
 
 class SimilarityEngine:
     def __init__(self):
+        self.logger = get_logger(__name__) 
         self.results = []
+        self.logger.info("initialization successful")
 
     def extract(self, features):
         results = []
 
         for problem in features.keys():
-            print(f"DEBUG: start work with {problem}")
+            
+            
+            self.logger.info(f"Work with {problem} problem") 
             for lang in features[problem].keys():
-                print(f"DEBUG: start work with {lang}")
+                self.logger.info(f"Start work on {lang} code") 
                 vectors = features[problem][lang]
                 
                 pairs = list(combinations(vectors, 2))

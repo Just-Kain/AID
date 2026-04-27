@@ -1,6 +1,7 @@
 __pycache__
 __pycache__/*
 *.pyc
+*.log
 cf_setings.py
 setings.py
 TEMP

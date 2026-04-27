@@ -1,6 +1,9 @@
 import os
 import shutil
 from pathlib import Path
+from logger_config import get_logger
+
+logger = get_logger(__name__)
 
 encoder='utf-8' 
 
@@ -52,7 +55,7 @@ def code_type_definition(code_type):
     try:  
         return code_lang_lib[code_type]
     except KeyError:
-        print('Warning this code type not supported to encoding!')
+        logger.warning('Warning this code type not supported to encoding!')
         return code_type
     
     
@@ -97,15 +100,10 @@ def sort_solution_to_dirs(req:dict, dir_path : str, work_dir_name="shcool_soluti
                     os.mkdir(need_path)
                     shutil.copy(file_path, need_path)
         except:
-            print("file with soluthion not found or somthing gone wrong")
+            logger.warning("file with soluthion not found or somthing gone wrong")
     
-    print(f"RETURNING {now_path}")
-    print(f"RETURNING {problem_set}")
+    logger.debug(f"RETURNING {now_path}")
+    logger.debug(f"RETURNING {problem_set}")
     
     return now_path, problem_set
 
-
-if __name__ == "__main__":
-    test = get_file_paths()
-    print(test)
-    

@@ -4,13 +4,17 @@ from data.collectors.codeforces.CodeforcesRequest import CFRequests
 from utils.file_utils import code_type_definition, use_comments
 import sqlite3
 from core.config import DB_PATH
+from logger_config import get_logger
+
 
 class CodeforcesCollector:
     
     def __init__(self, cf_key: str, cf_secret: str):
+        self.logger = get_logger(__name__) 
         self.cf_key = cf_key
         self.cf_secret = cf_secret
         self.data = None
+        self.logger.info("initialization successful")
     
     def _convert_to_utf8(self, sample_string: str):
         sample_string_bytes = sample_string.encode("utf-8")
@@ -23,7 +27,7 @@ class CodeforcesCollector:
         contest = cf.contest(cf)
         data = contest.status(contestId_=contest_id, groupCode_=group_id, from_=None, count_=None, asManager_="true", includeSources_="true")
         if data['status'] != 'OK':
-            print(f"WARNING! CFRequest failrule with status: {data['status']}\n {data['comment']}")
+            self.logger.warning(f"WARNING! CFRequest failrule with status: {data['status']}\n {data['comment']}")
             raise RuntimeError
         else:
             return data['result']
@@ -69,7 +73,7 @@ class CodeforcesCollector:
                 yield new_submition
                 
             except Exception as e:
-                print(f"Critical eror: You don't have manager rights\nCan't catch {e}")
+                self.logger.critical(f"You don't have manager rights\nCan't catch {e}")
 
     def fetch_submissions(self, contest_id : str, group_id : str):
         """Заполнение бд Submision"""
