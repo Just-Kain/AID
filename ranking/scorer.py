@@ -17,7 +17,6 @@ class Ranker:
                 score *= coef
             cand = Candidate(r.subID_a, r.subID_b, c)
             
-                
             candidates.append(cand)
         
         return candidates

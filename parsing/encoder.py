@@ -37,11 +37,12 @@ class ASTEncoder:
             
             return problem_names, submissions
         
-    def gen_ast(self, lang: str, code_list: list):
+    def gen_ast(self, lang: str, code_list: list, id: list):
         
         if lang in INCLUDING_LANGUAGE:
             if lang == 'py':
-                for code in code_list:
+                for code, sub_id in zip(code_list, id):
+                    self.logger.info(f"Work on submition:{sub_id}")
                     try: 
                         encoder = PY_TO_AST_ENCODER(code)
                         ast = encoder.create_ast()
@@ -63,10 +64,10 @@ class ASTEncoder:
             for code in code_list:
                 yield None
         
-    def gen_ast_list(self, lang: str, code_list: list):
+    def gen_ast_list(self, lang: str, code_list: list, id: list):
         ast_list = list()
         
-        for ast in self.gen_ast(lang, code_list):
+        for ast in self.gen_ast(lang, code_list, id):
             ast_list.append(ast)
             
         return ast_list
@@ -79,7 +80,7 @@ class ASTEncoder:
             self.logger.info(f"Work with {name} problem") 
             for lang, sub in submissions[name].items():
                 self.logger.info(f"Start work on {lang} code") 
-                submissions[name][lang]['ast'] = self.gen_ast_list(lang, sub['code'])
+                submissions[name][lang]['ast'] = self.gen_ast_list(lang, sub['code'], sub['id'])
         
         return submissions
 

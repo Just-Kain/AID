@@ -74,6 +74,7 @@ def use_comments(code: str, code_type: str):
         return 0
     
 #todo : сделать возможность доставать из реквеста задачи
+
 def sort_solution_to_dirs(req:dict, dir_path : str, work_dir_name="shcool_solution_space"):
     """
     Копирует все решения из dir_path в work_dir_name и сортирует их по задачам из cf_request\n

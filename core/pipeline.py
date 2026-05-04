@@ -11,10 +11,7 @@ from ranking.scorer import Ranker
 from core.config import CF_KEY, CF_SECRET
 from logger_config import get_logger
 
-
 #from report.generator import ReportGenerator
-
-
 
 class Pipeline:
 

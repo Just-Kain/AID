@@ -41,3 +41,8 @@ for name in problem_names:
         else:
             print('lol')
             print(sub['id'])
+
+if __name__ == "__main__":
+    from rich import print
+
+    print("Посетите [link=https://example.com]наш сайт[/link]!")

@@ -9,5 +9,5 @@ CLANG_PATH = "C:\\Program Files\\LLVM\\bin\\libclang.dll"
 CF_KEY = "472617f3caaf831c7c98f30a50a7b3e10cd218e0"
 CF_SECRET = "364629748a398f731dfea991b74fbd9e019c796f"
 
-#Now sapported languages is: python as "py", c++ compiler with clang as "c++"
+#Now supported languages is: python as "py", c++ compiler with clang as "c++"
 INCLUDING_LANGUAGE = ('py') 
